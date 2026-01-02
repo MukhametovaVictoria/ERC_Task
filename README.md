@@ -1,29 +1,84 @@
-# ERC_Task
-Задание: Реализовать сервис передачи показаний и последуюзий расчет суммы в квитанции
+# Utility Meter Reading & Billing Service
 
-Что было использовано:
-Использовалась технология ASP.NET MVC Core в сочетании с Entity Framework и MS SQL Server.
+**A simple ASP.NET Core MVC service for recording utility meter readings and generating billing information.**
 
-Что было сделано:
-Были созданы 4 модели:
-1. Модель владельца лицевого счета - User
-2. Модель Лицевого счета - PersonalAccount
-3. Модель Показаний приборов учета - MetersData
-4. Модель Квитанции - Bill
+---
 
-Соответственно было создано 4 контроллера.
-Условия работы:
-1. Можно создавать владельца только в связке с созданием лицевого счета. Если владелец уже имеется в системе - то он не создается.
-2. Если лицевой счет уже существует, то новый не создается.
-3. Можно изменять лицевой счет, но нельзя поменять его владельца.
-4. Можно передавать показания приборов учета только при наличии Лицевого счета.
-5. Можно изменять показания приборов учета за последний переданный месяц. Показания более ранние изменять нельзя.
-6. Можно отправлять не заполненные формы, но тогда будут добавлены нормативные показания.
-7. При передаче показаний автоматически создается квитанция. 
-8. Если показания переотправляются, квитанция также обновляется.
-9. Лицевой счет нужно запоминать, т.к. личный кабинет не реализован и при переходе на другие страницы не предлагается выбрать один из своих счетов.
+## 🔎 Overview
 
-Что пока не доделано:
-1. Неизвестно что произойдет, если какое-то время передавать показания с наличием одних счетчиков, а потом изменить данные в лицевом счете. История смены данных в л/с на данный момент не ведется. Хотя кнопка редактирования реализована. На будущее.
-2. Неизвестно что будет, если целенаправленно пытаться вызвать ошибку и вбивать невалидные данные в url или формы (Валидация в формах вроде реализована, но не дотестирована).
-3. Личный кабинет не реализован. 
+This project implements a backend service that allows users to submit utility meter readings and automatically calculates billing based on the latest submitted data.
+
+It was created as part of a technical task to demonstrate backend development skills using **ASP.NET Core MVC**, **Entity Framework**, and **MS SQL Server**.
+
+---
+
+## 🛠 Features
+
+The service includes:
+
+- 📥 Recording meter readings for a personal account
+- 💰 Automatic billing generation when a new reading is submitted
+- 🧩 Four domain models representing core entities
+- REST-style architecture with separate controllers for each model
+
+---
+
+## 🧱 Models & Their Responsibilities
+
+1. **User** — account owner  
+2. **PersonalAccount** — utility account linked to a user  
+3. **MetersData** — utility meter readings  
+4. **Bill** — generated billing document
+
+Each model has a dedicated controller that handles CRUD operations and business logic.
+
+---
+
+## 🚦 Business Rules
+
+- A *User* must be created together with a *PersonalAccount*.  
+- Duplicate accounts or users are not allowed.  
+- *PersonalAccount* owner cannot be changed after creation.  
+- Meter readings can only be updated for the most recent month.  
+- Every time meter readings are submitted, a **Bill** is automatically generated or updated.  
+- Simple validation is implemented for basic scenarios.
+
+---
+
+## 🧩 Tech Stack
+
+- **Backend**: ASP.NET Core MVC  
+- **ORM**: Entity Framework Core  
+- **Database**: MS SQL Server  
+- **Patterns**: REST-style controllers, layered architecture
+
+---
+
+## 🚀 How to Run (Example)
+
+1. Clone the repository  
+2. Configure the connection string in `appsettings.json`  
+3. Run `dotnet ef database update` to apply migrations  
+4. Start the application with `dotnet run`  
+5. Use Swagger or Postman to test API endpoints
+
+---
+
+## 📈 What This Demonstrates
+
+This repository highlights practical skills in:
+
+✔ Building a web backend with .NET MVC  
+✔ Designing relational data models  
+✔ Handling business logic and validation  
+✔ Working with Entity Framework and SQL Server
+
+---
+
+## 🧠 Next Improvements (optional)
+
+- Add authentication and authorization  
+- Add automated tests  
+- Deploy as a Docker container or to cloud
+
+---
